@@ -1,0 +1,53 @@
+### Cấu hình biến môi trường
+### Lưu ý: Chỉnh sửa lại context path tùy theo cấu hình Deployment trong Tomcat của bạn
+### Ví dụ: http://localhost:8080/api hoặc http://localhost:8080/NguyenVanTruong_23653651_Tuan2_1_0_SNAPSHOT_war_exploded/api
+@baseUrl = http://localhost:8080/NguyenVanTruong_23653651_Tuan2_1_0_SNAPSHOT_war_exploded/api
+
+### 1. Kiểm tra session khi chưa đăng nhập
+GET {{baseUrl}}/auth/session
+Accept: application/json
+
+### 2. Đăng nhập (tài khoản mẫu: student / 123456)
+# IntelliJ HTTP Client sẽ tự động lưu Cookie JSESSIONID cho các request tiếp theo
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "student",
+  "password": "123456"
+}
+
+### 3. Kiểm tra lại session sau khi đăng nhập thành công
+GET {{baseUrl}}/auth/session
+Accept: application/json
+
+### 4. Lấy danh sách sản phẩm (yêu cầu đã đăng nhập)
+GET {{baseUrl}}/products
+Accept: application/json
+
+### 5. Thêm Laptop (id: 1) vào giỏ hàng
+POST {{baseUrl}}/cart/items
+Content-Type: application/json
+
+{
+  "productId": 1
+}
+
+### 6. Thêm Chuột (id: 3) vào giỏ hàng
+POST {{baseUrl}}/cart/items
+Content-Type: application/json
+
+{
+  "productId": 3
+}
+
+### 7. Xem thông tin giỏ hàng hiện tại
+GET {{baseUrl}}/cart
+Accept: application/json
+
+### 8. Đăng xuất (hủy session)
+DELETE {{baseUrl}}/auth/session
+
+### 9. Kiểm tra lại session sau khi đăng xuất
+GET {{baseUrl}}/auth/session
+Accept: application/json
